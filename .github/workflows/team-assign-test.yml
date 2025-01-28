@@ -28,4 +28,4 @@ jobs:
         env: 
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         # test the create pull request cli command and assign the "dream-team" as the reviewers
-        run: gh pr create -B ${{ env.BRANCH_BASE }} -H ${{ env.BRANCH_HEAD }} -r @dans-thicc-runners/dream-team -t 'Merge feature branch into DEV branch' -b 'Auto-created by workflow'
+        run: gh pr create -B ${{ env.BRANCH_BASE }} -H ${{ env.BRANCH_HEAD }} -r '@dans-thicc-runners/dream-team' -t 'Merge feature branch into DEV branch' -b 'Auto-created by workflow'
