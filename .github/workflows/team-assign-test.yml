@@ -1,0 +1,31 @@
+name: Dev Workflow PR and pre-approval checks
+on:
+  [workflow_dispatch]
+
+env:
+  REPO_NAME : ${{ github.event.repository.name }}
+  ORG_NAME : ${{ github.repository_owner }}
+  BRANCH_BASE : dev
+  BRANCH_HEAD : ${{ github.ref_name }}
+
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+
+jobs:
+  feature-pr:
+
+    permissions: write-all
+    name: Feature Branch Pull Request
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Repo Checkout
+        uses: actions/checkout@v4
+
+      - name: Create pull request to DEV
+        env: 
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # test the create pull request cli command and assign the "dream-team" as the reviewers
+        run: gh pr create -B ${{ env.BRANCH_BASE }} -H ${{ env.BRANCH_HEAD }} -r dream-team -t 'Merge feature branch into DEV branch' -b 'Auto-created by workflow'
